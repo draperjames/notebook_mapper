@@ -11,6 +11,7 @@ usr_path = os.path.expanduser('~')
 ipython_startup = os.path.join(usr_path, '.ipython', 'profile_default', 'startup')
 
 print(ipython_startup)
+
 # code="""
 # from notebook_mapper import append_mapped
 # append_mapped(path={}, server={})

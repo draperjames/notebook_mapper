@@ -49,7 +49,7 @@ def find_mapped_drive_letter(network_path):
     if net_use().shape[0]:
 
         mask = net_use().Remote.str.contains(network_path)
-        result = net_use().loc[mask].Local
+        result = net_use().loc[mask].reset_index().Local
         # Connect exists.
         if result.shape == (1,):
             return result[0]
@@ -103,3 +103,6 @@ def append_mapped(path, server):
               target_path)
     else:
         print('Failed to append:', target_path, 'to system path.')
+
+if __name__ == '__main__':
+    print(find_mapped_drive_letter('duhs'))
