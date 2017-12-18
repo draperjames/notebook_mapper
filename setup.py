@@ -7,7 +7,7 @@ HERE = os.path.dirname(__file__)
 
 setup(
     name="notebook_mapper",
-    version="0.0.6",
+    version="0.0.8",
     description="Jupyter Notebooks + Windows Server mapped drives toolkit.",
     author="James Draper",
     author_email="james.draper@duke.edu",

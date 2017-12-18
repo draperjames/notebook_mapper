@@ -182,5 +182,6 @@ class AutoMapper:
                 except:
                     print("Could not append:", i['path'], ', on:', i['server'], 'to Python path.')
 
+
 if __name__ == "__main__":
-    # AutoMapper().auto_append_mappings()
+    AutoMapper().auto_append_mappings()
