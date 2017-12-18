@@ -6,6 +6,7 @@ import sys
 import os
 import re
 import subprocess
+import json
 import pandas as pd
 
 
@@ -104,5 +105,53 @@ def append_mapped(path, server):
     else:
         print('Failed to append:', target_path, 'to system path.')
 
-if __name__ == '__main__':
-    print(find_mapped_drive_letter('duhs'))
+
+class AutoMapper:
+
+    profile_dir = os.path.expanduser('~')
+
+    ipy_startup = os.path.join(profile_dir, '.ipython',
+                               'profile_default', 'startup')
+
+    mapping_dir = 'directory_mapping.json'
+
+    mapping_dir = os.path.join(ipy_startup, mapping_dir)
+
+
+    @classmethod
+    def create_dir_mapping_json(cls):
+        dir_mappings = []
+        if not os.path.exists(cls.mapping_dir):
+            with open(cls.mapping_dir, 'w') as f:
+                json.dump(dir_mappings, f)
+
+    @classmethod
+    def get_dir_mapping(cls):
+        cls.create_dir_mapping_json()
+        return json.load(open(cls.mapping_dir, 'r'))
+
+
+    @classmethod
+    def set_dir_mapping(cls, mapping):
+        dir_mappings = cls.get_dir_mapping()
+
+        if mapping not in dir_mappings:
+            dir_mappings.append(mapping)
+
+            with open(cls.mapping_dir, 'w') as f:
+                json.dump(dir_mappings, f)
+
+    @classmethod
+    def auto_append_mappings(cls):
+        if os.path.exists(cls.mapping_dir):
+            mappings = cls.get_dir_mapping()
+
+            for i in mappings:
+                try:
+                    append_mapped(path=i['path'], server=i['server'])
+
+                except:
+                    print("Could not append:", i['path'], ', on:', i['server'], 'to Python path.')
+
+if __name__ == "__main__":
+    AutoMapper().auto_append_mappings()
