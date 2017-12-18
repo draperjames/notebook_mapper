@@ -132,7 +132,33 @@ class AutoMapper:
 
 
     @classmethod
-    def set_dir_mapping(cls, mapping):
+    def set_dir_mapping(cls, path=None, server=None, mapping=None):
+        """Adds a mapped directory to the list of directories imported at startup.
+
+        %userprofile%\\.ipython\\profile_default\\startup\\directory\\directory_mapping.json
+
+        Parameters
+        ----------
+        path: str
+
+        server: str
+
+        mapping: dict
+            e.g. dict({"path":"selected\\directory", "sever":"target_server"})
+
+        """
+        # FIXME: add support for path and server strings.
+        # FIXME: add support for file browser.
+
+        # If strings have been given then use those to create a mapping.
+        if path is not None and server is not None:
+            mapping = dict()
+            mapping['path'] = path
+            mapping['server'] = server
+
+        # Append the mapped dir allowing for imports in that module after function completion.
+        append_mapped(path=mapping['path'], server=mapping['server'])
+
         dir_mappings = cls.get_dir_mapping()
 
         if mapping not in dir_mappings:
@@ -140,6 +166,9 @@ class AutoMapper:
 
             with open(cls.mapping_dir, 'w') as f:
                 json.dump(dir_mappings, f)
+                print("The directory has been added to the list of directories appended to the python path at startup.")
+        else:
+            print("The directory already exists in the list of directories appended to the python path at startup.")
 
     @classmethod
     def auto_append_mappings(cls):
@@ -154,4 +183,4 @@ class AutoMapper:
                     print("Could not append:", i['path'], ', on:', i['server'], 'to Python path.')
 
 if __name__ == "__main__":
-    AutoMapper().auto_append_mappings()
+    # AutoMapper().auto_append_mappings()
