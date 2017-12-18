@@ -9,6 +9,14 @@ import subprocess
 import json
 import pandas as pd
 
+# FIXME: Add support for paths with no server.
+
+# Load auto_mapper_code from the template.
+template_path = os.path.join(os.getcwd(), 'auto_mapper_template.txt')
+
+with open(template_path, 'r') as f:
+    auto_mapper_code = f.read()
+
 
 def native_cmd(cmd, whitespace=False):
     """Returns the output of a native command on a give system.
@@ -114,9 +122,10 @@ class AutoMapper:
                                'profile_default', 'startup')
 
     mapping_dir = 'directory_mapping.json'
-
     mapping_dir = os.path.join(ipy_startup, mapping_dir)
 
+    auto_append_fn = 'auto_append_directory_mapping.py'
+    auto_append_fn = os.path.join(ipy_startup, auto_append_fn)
 
     @classmethod
     def create_dir_mapping_json(cls):
@@ -124,6 +133,15 @@ class AutoMapper:
         if not os.path.exists(cls.mapping_dir):
             with open(cls.mapping_dir, 'w') as f:
                 json.dump(dir_mappings, f)
+
+    @classmethod
+    def create_auto_append(cls):
+        """Inject code from auto_mapper_template.txt into .ipython\\profile_default\\startup
+        """
+        if not os.path.exists(cls.auto_append_fn):
+            with open(cls.auto_append_fn, 'w') as f:
+                f.write(auto_mapper_code)
+
 
     @classmethod
     def get_dir_mapping(cls):
@@ -150,6 +168,8 @@ class AutoMapper:
         # FIXME: add support for path and server strings.
         # FIXME: add support for file browser.
 
+        # Create the auto_append file if it does not exist.
+        cls.create_auto_append()
         # If strings have been given then use those to create a mapping.
         if path is not None and server is not None:
             mapping = dict()
@@ -183,5 +203,6 @@ class AutoMapper:
                     print("Could not append:", i['path'], ', on:', i['server'], 'to Python path.')
 
 
-if __name__ == "__main__":
-    AutoMapper().auto_append_mappings()
+# if __name__ == "__main__":
+#     # AutoMapper().auto_append_mappings()
+#     AutoMapper().create_auto_append()
