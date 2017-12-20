@@ -37,7 +37,7 @@ def net_use():
     """
     # Call Windows commandline.
     result = native_cmd('net use', whitespace=True)
-    result = re.sub('\r','', result, re.X)
+    result = re.sub('\r', '', result, re.X)
 
     result = list(filter(lambda x: len(x) > 0, result.split('\n')))[1:-1]
     result = list(filter(lambda x: x[0].isalpha(), result))
