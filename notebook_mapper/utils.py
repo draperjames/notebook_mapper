@@ -12,7 +12,7 @@ import pandas as pd
 # FIXME: Add support for paths with no server.
 
 # Load auto_mapper_code from the template.
-template_path = os.path.join(os.getcwd(), 'auto_mapper_template.txt')
+template_path = 'auto_mapper_template.txt'
 
 with open(template_path, 'r') as f:
     auto_mapper_code = f.read()
