@@ -18,6 +18,7 @@ setup(
     provides=["notebook_mapper"],
     keywords="jupyter, notebook, Windows, Mapped Drive, Windows Server",
     long_description=open(os.path.join(HERE, "README.md"), "r").read(),
+    package_data = {'notebook_mapper': ['*.txt',]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
