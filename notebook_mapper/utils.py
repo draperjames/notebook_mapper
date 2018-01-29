@@ -8,15 +8,16 @@ import re
 import subprocess
 import json
 import pandas as pd
-
+from .automapper_template import template
 # FIXME: Add support for paths with no server.
 
 # Load auto_mapper_code from the template.
-template_path = 'auto_mapper_template.txt'
+# template_path = 'auto_mapper_template.txt'
+#
+# with open(template_path, 'r') as f:
+#     auto_mapper_code = f.read()
 
-with open(template_path, 'r') as f:
-    auto_mapper_code = f.read()
-
+auto_mapper_code = template
 
 def native_cmd(cmd, whitespace=False):
     """Returns the output of a native command on a give system.

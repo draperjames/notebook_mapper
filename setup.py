@@ -7,18 +7,18 @@ HERE = os.path.dirname(__file__)
 
 setup(
     name="notebook_mapper",
-    version="0.0.12",
+    version="0.0.13",
     description="Jupyter Notebooks + Windows Server mapped drives toolkit.",
     author="James Draper",
     author_email="james.draper@duke.edu",
     license="MIT",
     url="https://github.com/draperjames/notebook_mapper",
-    packages=find_packages(),
     platforms=["POSIX", "Windows"],
     provides=["notebook_mapper"],
     keywords="jupyter, notebook, Windows, Mapped Drive, Windows Server",
     long_description=open(os.path.join(HERE, "README.md"), "r").read(),
-    package_data = {'notebook_mapper': ['*.txt',]},
+    packages=find_packages(),
+    # package_data = {'notebook_mapper': ['auto_mapper_template.txt',],},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
