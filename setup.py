@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 import os
-
 from setuptools import setup, find_packages
+
+here = os.getcwd()
+
+with open(os.path.join(here, 'notebook_mapper', '__version__')) as f:
+    __version__ = f.read().strip()
+
 
 HERE = os.path.dirname(__file__)
 
 setup(
     name="notebook_mapper",
-    version="0.0.13",
+    version=__version__,
     description="Jupyter Notebooks + Windows Server mapped drives toolkit.",
     author="James Draper",
     author_email="james.draper@duke.edu",
@@ -18,6 +23,7 @@ setup(
     keywords="jupyter, notebook, Windows, Mapped Drive, Windows Server",
     long_description=open(os.path.join(HERE, "README.md"), "r").read(),
     packages=find_packages(),
+    package_data = {'notebook_mapper': ['__version__'],},
     # package_data = {'notebook_mapper': ['auto_mapper_template.txt',],},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
